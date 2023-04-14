@@ -3,7 +3,7 @@ import { Transfer } from "../generated/schema"
 
 export function handleTransfer(event: TransferEvent): void {
   let entity = new Transfer(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
+    event.transaction.hash.concatI32(event.logIndex.toI32() + 1)
   )
   entity._from = event.params._from
   entity._to = event.params._to
