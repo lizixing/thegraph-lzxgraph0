@@ -1,0 +1,24 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MetaCoin
+    network: goerli
+    source:
+      address: "0xa4b7e47d514013129925fe689dc850c16729aa51"
+      abi: MetaCoin
+      startBlock: 8772144
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: MetaCoin
+          file: ./abis/MetaCoin.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/meta-coin.ts

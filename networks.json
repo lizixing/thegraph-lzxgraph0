@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "MetaCoin": {
+      "address": "0xa4b7e47d514013129925fe689dc850c16729aa51",
+      "startBlock": 8772144
+    }
+  }
+}
