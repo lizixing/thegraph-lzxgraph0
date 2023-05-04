@@ -1,10 +1,10 @@
+import { log } from "@graphprotocol/graph-ts"
 import { Transfer as TransferEvent } from "../generated/MetaCoin/MetaCoin"
 import { Transfer } from "../generated/schema"
+import { buildID } from "./common";
 
 export function handleTransfer(event: TransferEvent): void {
-  let entity = new Transfer(
-    event.transaction.hash.concatI32(event.logIndex.toI32() + 1)
-  )
+  let entity = new Transfer(buildID(event))
   entity._from = event.params._from
   entity._to = event.params._to
   entity._value = event.params._value
@@ -15,4 +15,10 @@ export function handleTransfer(event: TransferEvent): void {
   entity.logIndex = event.logIndex
 
   entity.save()
+
+  log.info("blockNumber = {}, logIndex = {}, transactionHash = {}", [
+    event.block.number.toHexString(),
+    event.logIndex.toHexString(),
+    event.transaction.hash.toHexString(),
+  ]);
 }
