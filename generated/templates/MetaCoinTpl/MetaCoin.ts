@@ -39,8 +39,42 @@ export class Transfer__Params {
     return this._event.parameters[3].value.toI32();
   }
 
-  get _extra2(): Bytes {
-    return this._event.parameters[4].value.toBytes();
+  get _extra2(): Array<Transfer_extra2Struct> {
+    return this._event.parameters[4].value.toTupleArray<
+      Transfer_extra2Struct
+    >();
+  }
+}
+
+export class Transfer_extra2Struct extends ethereum.Tuple {
+  get addr(): Address {
+    return this[0].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get person(): Array<Transfer_extra2PersonStruct> {
+    return this[2].toTupleArray<Transfer_extra2PersonStruct>();
+  }
+}
+
+export class Transfer_extra2PersonStruct extends ethereum.Tuple {
+  get name(): string {
+    return this[0].toString();
+  }
+
+  get age(): i32 {
+    return this[1].toI32();
+  }
+
+  get p1(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get p2(): BigInt {
+    return this[3].toBigInt();
   }
 }
 

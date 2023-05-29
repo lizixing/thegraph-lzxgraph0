@@ -20,7 +20,7 @@
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "_value",
         "type": "uint256"
@@ -71,7 +71,7 @@
             "type": "tuple[]"
           }
         ],
-        "indexed": true,
+        "indexed": false,
         "internalType": "struct MetaCoin.Funder[]",
         "name": "_extra2",
         "type": "tuple[]"
@@ -96,7 +96,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -144,7 +145,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -163,7 +165,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -182,6 +185,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   }
 ]
