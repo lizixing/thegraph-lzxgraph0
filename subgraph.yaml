@@ -6,9 +6,9 @@ dataSources:
     name: MetaCoin
     network: goerli
     source:
-      address: "0xa4b7e47d514013129925fe689dc850c16729aa51"
+      address: "0x5f10ff56714d7da180d04c1f3e9c531d2fdc0467"
       abi: MetaCoin
-      startBlock: 8772144
+      startBlock: 9083875
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -19,9 +19,9 @@ dataSources:
         - name: MetaCoin
           file: ./abis/MetaCoin.json
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
+        - event: Transfer(indexed address,indexed address,uint256,int32,(indexed address,uint256,(string,int32,uint256,uint256)[])[])
           handler: handleTransfer
-          topic0: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+          topic0: "0x82fb7eb2472ebdffa57430feb709b82feadd71ace2703a2724e8fc26a9d8d210"
       file: ./src/meta-coin.ts
 templates:
   - kind: ethereum
@@ -39,7 +39,7 @@ templates:
         - name: MetaCoin
           file: ./abis/MetaCoin.json
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
+        - event: Transfer(indexed address,indexed address,uint256,int32,(indexed address,uint256,(string,int32,uint256,uint256)[])[])
           handler: handleTransfer
-          topic0: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+          topic0: "0x82fb7eb2472ebdffa57430feb709b82feadd71ace2703a2724e8fc26a9d8d210"
       file: ./src/meta-coin.ts

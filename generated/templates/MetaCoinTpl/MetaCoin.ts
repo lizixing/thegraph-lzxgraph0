@@ -34,6 +34,14 @@ export class Transfer__Params {
   get _value(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
+
+  get _extra1(): i32 {
+    return this._event.parameters[3].value.toI32();
+  }
+
+  get _extra2(): Bytes {
+    return this._event.parameters[4].value.toBytes();
+  }
 }
 
 export class MetaCoin__getConvertorResult {
@@ -89,67 +97,6 @@ export class MetaCoin__sendCoinResult {
 export class MetaCoin extends ethereum.SmartContract {
   static bind(address: Address): MetaCoin {
     return new MetaCoin("MetaCoin", address);
-  }
-
-  convert(amount: BigInt): BigInt {
-    let result = super.call("convert", "convert(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(amount)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_convert(amount: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("convert", "convert(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(amount)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getBalance(addr: Address): BigInt {
-    let result = super.call("getBalance", "getBalance(address):(uint256)", [
-      ethereum.Value.fromAddress(addr)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_getBalance(addr: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getBalance", "getBalance(address):(uint256)", [
-      ethereum.Value.fromAddress(addr)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getBalanceInEth(addr: Address): BigInt {
-    let result = super.call(
-      "getBalanceInEth",
-      "getBalanceInEth(address):(uint256)",
-      [ethereum.Value.fromAddress(addr)]
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_getBalanceInEth(addr: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getBalanceInEth",
-      "getBalanceInEth(address):(uint256)",
-      [ethereum.Value.fromAddress(addr)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getConvertor(): MetaCoin__getConvertorResult {
@@ -218,6 +165,67 @@ export class MetaCoin extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new MetaCoin__sendCoinResult(value[0].toBigInt(), value[1].toBigInt())
     );
+  }
+
+  getBalanceInEth(addr: Address): BigInt {
+    let result = super.call(
+      "getBalanceInEth",
+      "getBalanceInEth(address):(uint256)",
+      [ethereum.Value.fromAddress(addr)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getBalanceInEth(addr: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getBalanceInEth",
+      "getBalanceInEth(address):(uint256)",
+      [ethereum.Value.fromAddress(addr)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getBalance(addr: Address): BigInt {
+    let result = super.call("getBalance", "getBalance(address):(uint256)", [
+      ethereum.Value.fromAddress(addr)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getBalance(addr: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("getBalance", "getBalance(address):(uint256)", [
+      ethereum.Value.fromAddress(addr)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  convert(amount: BigInt): BigInt {
+    let result = super.call("convert", "convert(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(amount)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_convert(amount: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("convert", "convert(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(amount)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 
