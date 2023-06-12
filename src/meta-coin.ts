@@ -1,4 +1,4 @@
-import {log} from "@graphprotocol/graph-ts"
+import {BigDecimal, log} from "@graphprotocol/graph-ts"
 import {Transfer as TransferEvent} from "../generated/MetaCoin/MetaCoin"
 import {Transfer} from "../generated/schema"
 import {buildID} from "./common";
@@ -85,6 +85,12 @@ export class MyEvent {
     public intKey20: i8,
     public intKey21: i8,
     public intKey22: i8,
+    public bigIntKey1: BigInt,
+    public bigIntKey2: BigInt,
+    public bigIntKey3: BigInt,
+    public bigDecimalKey1: BigDecimal,
+    public bigDecimalKey2: BigDecimal,
+    public bigDecimalKey3: BigDecimal,
   ) {
   }
 }
@@ -107,7 +113,13 @@ export function returnMyEvent(): MyEvent {
   return new MyEvent(arr1, arr2, params,
     111, 112, 113, 114, 115, 116,
     true, 178.125, 0.00125, addr, "message12",
-    117, 118, 119)
+    117, 118, 119,
+    BigInt.fromU32(3333333333),
+    BigInt.fromI32(-1111111111),
+    BigInt.zero(),
+    new BigDecimal(BigInt.fromI32(-1111111111)),
+    BigDecimal.fromString("11111111.22222222"),
+    BigDecimal.fromString("-11111111.22222222"))
 }
 
 export function returnMyEventV2(event: MyEvent): MyEvent {
@@ -118,6 +130,8 @@ export function returnMyEventV2(event: MyEvent): MyEvent {
   event.address = Address.fromBytes(Bytes.fromHexString("0102030405060708090a0b0c0d0e0f1011121318"))
   event.array2 = null
   event.intKey22 = -111
+  event.bigIntKey3 = event.bigIntKey1.minus(event.bigIntKey2)
+  event.bigDecimalKey3 = event.bigDecimalKey1.times(event.bigDecimalKey2)
   return event
 }
 
