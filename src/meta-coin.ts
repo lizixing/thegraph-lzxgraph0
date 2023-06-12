@@ -1,5 +1,5 @@
 import {BigDecimal, log} from "@graphprotocol/graph-ts"
-import {Transfer as TransferEvent} from "../generated/MetaCoin/MetaCoin"
+import {MetaCoin, Transfer as TransferEvent} from "../generated/MetaCoin/MetaCoin"
 import {Transfer} from "../generated/schema"
 import {buildID} from "./common";
 import {Address, BigInt} from "@graphprotocol/graph-ts/common/numbers";
@@ -21,7 +21,17 @@ export function handleTransfer(event: TransferEvent): void {
   entity.transactionHash = event.transaction.hash
   entity.logIndex = event.logIndex
 
-  log.info("step-3", []);
+  let mcAddr = event.transaction.to
+  if (mcAddr !== null) {
+    let mc = MetaCoin.bind(mcAddr)
+    entity.srcBalance = mc.getBalance(event.params._from)
+    entity.dstBalance = mc.getBalance(event.params._to)
+  }
+
+  log.info("step-3, srcBalance = {}, dstBalance = {}", [
+    entity.srcBalance.toString(),
+    entity.dstBalance.toString(),
+  ]);
   entity.save()
 
   log.info("blockNumber = {}, logIndex = {}, transactionHash = {}", [

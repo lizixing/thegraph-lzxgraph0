@@ -29,23 +29,13 @@ export class Transfer extends Entity {
     }
   }
 
-  static loadInBlock(id: Bytes): Transfer | null {
-    return changetype<Transfer | null>(
-      store.get_in_block("Transfer", id.toHexString())
-    );
-  }
-
   static load(id: Bytes): Transfer | null {
     return changetype<Transfer | null>(store.get("Transfer", id.toHexString()));
   }
 
   get id(): Bytes {
     let value = this.get("id");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set id(value: Bytes) {
@@ -54,11 +44,7 @@ export class Transfer extends Entity {
 
   get _from(): Bytes {
     let value = this.get("_from");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set _from(value: Bytes) {
@@ -67,11 +53,7 @@ export class Transfer extends Entity {
 
   get _to(): Bytes {
     let value = this.get("_to");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set _to(value: Bytes) {
@@ -80,11 +62,7 @@ export class Transfer extends Entity {
 
   get _value(): BigInt {
     let value = this.get("_value");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set _value(value: BigInt) {
@@ -93,11 +71,7 @@ export class Transfer extends Entity {
 
   get blockNumber(): BigInt {
     let value = this.get("blockNumber");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set blockNumber(value: BigInt) {
@@ -106,11 +80,7 @@ export class Transfer extends Entity {
 
   get blockTimestamp(): BigInt {
     let value = this.get("blockTimestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set blockTimestamp(value: BigInt) {
@@ -119,24 +89,34 @@ export class Transfer extends Entity {
 
   get transactionHash(): Bytes {
     let value = this.get("transactionHash");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set transactionHash(value: Bytes) {
     this.set("transactionHash", Value.fromBytes(value));
   }
 
+  get srcBalance(): BigInt {
+    let value = this.get("srcBalance");
+    return value!.toBigInt();
+  }
+
+  set srcBalance(value: BigInt) {
+    this.set("srcBalance", Value.fromBigInt(value));
+  }
+
+  get dstBalance(): BigInt {
+    let value = this.get("dstBalance");
+    return value!.toBigInt();
+  }
+
+  set dstBalance(value: BigInt) {
+    this.set("dstBalance", Value.fromBigInt(value));
+  }
+
   get logIndex(): BigInt {
     let value = this.get("logIndex");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set logIndex(value: BigInt) {
