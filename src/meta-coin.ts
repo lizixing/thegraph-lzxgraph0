@@ -1,9 +1,10 @@
 import {BigDecimal, log} from "@graphprotocol/graph-ts"
-import {MetaCoin, Transfer as TransferEvent} from "../generated/MetaCoin/MetaCoin"
+import {MetaCoin, SendCoinCall, Transfer as TransferEvent} from "../generated/MetaCoin/MetaCoin"
 import {Transfer} from "../generated/schema"
 import {buildID} from "./common";
 import {Address, BigInt} from "@graphprotocol/graph-ts/common/numbers";
 import {ethereum} from "@graphprotocol/graph-ts/chain/ethereum";
+import {dataSource} from "@graphprotocol/graph-ts/common/datasource";
 import {Bytes} from "@graphprotocol/graph-ts/common/collections";
 import {MetaCoinTpl} from "../generated/templates";
 
@@ -15,6 +16,9 @@ export function handleTransfer(event: TransferEvent): void {
   entity._to = event.params._to
   entity._value = event.params._value
   log.info("step-2", []);
+
+  let ctx = dataSource.context()
+  let transactions = ctx.getString("transactions")
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -41,6 +45,28 @@ export function handleTransfer(event: TransferEvent): void {
   ]);
 
   MetaCoinTpl.create(event.params._to)
+}
+
+export function processTransfer(transfer: Transfer): Transfer {
+  log.info("before transfer.id = {}", [transfer.id.toHexString()])
+  log.info("before transfer._from = {}", [transfer._from.toHexString()])
+  log.info("before transfer._to = {}", [transfer._to.toHexString()])
+  // log.info("before transfer._value = {}", [transfer._value.toString()]) // transfer._value is lost
+  transfer._value = BigInt.fromI32(1234567890)
+  log.info("after transfer.id = {}", [transfer.id.toHexString()])
+  log.info("after transfer._from = {}", [transfer._from.toHexString()])
+  log.info("after transfer._to = {}", [transfer._to.toHexString()])
+  log.info("after transfer._value = {}", [transfer._value.toString()])
+  return transfer
+}
+
+export function handleSendCoin(call: SendCoinCall): void {
+  log.info("called send coin, receiver:{}, amount:{}, retV1:{}, retV2:{}", [
+    call.inputs.receiver.toString(),
+    call.inputs.amount.toString(),
+    call.outputs.v1.toString(),
+    call.outputs.v2.toString(),
+  ])
 }
 
 export function add(a: i32, b: i32): i32 {

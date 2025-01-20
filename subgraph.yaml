@@ -21,7 +21,9 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256,int32,(address,uint256,(string,int32,uint256,uint256)[])[])
           handler: handleTransfer
-          topic0: "0x82fb7eb2472ebdffa57430feb709b82feadd71ace2703a2724e8fc26a9d8d210"
+      callHandlers:
+        - function: 'sendCoin(address,uint256)'
+          handler: handleSendCoin
       file: ./src/meta-coin.ts
 templates:
   - kind: ethereum
@@ -41,5 +43,7 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256,int32,(address,uint256,(string,int32,uint256,uint256)[])[])
           handler: handleTransfer
-          topic0: "0x82fb7eb2472ebdffa57430feb709b82feadd71ace2703a2724e8fc26a9d8d210"
+      callHandlers:
+        - function: 'sendCoin(address,uint256)'
+          handler: handleSendCoin
       file: ./src/meta-coin.ts
